@@ -20,14 +20,14 @@ screen.onkey(snake.down, "Down")
 screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
 
-
 game_is_on = True
 while game_is_on:
-    end_game = True
     screen.update()
     time.sleep(0.1)
 
     snake.move()
+
+    score.update_score()
 
     if snake.all_snake_parts[0].distance(food) < 15:
         food.refresh()
@@ -35,12 +35,12 @@ while game_is_on:
         score.count_score()
 
     if snake.all_snake_parts[0].xcor() > 280 or snake.all_snake_parts[0].xcor() < -280 or snake.all_snake_parts[0].ycor() > 280 or snake.all_snake_parts[0].ycor() < -280:
-        game_is_on = False
-        score.game_is_over()
+        score.reset()
+        snake.reset()
 
     for part in snake.all_snake_parts[1:]:
         if snake.all_snake_parts[0].distance(part) < 10:
-            game_is_on = False
-            score.game_is_over()
+            score.reset()
+            snake.reset()
 
 screen.exitonclick()
